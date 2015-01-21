@@ -1,0 +1,18 @@
+machine:
+  environment:
+    LEARN_OAUTH_CLIENT_ID: x
+    LEARN_OAUTH_CLIENT_SECRET: x
+  ghc:
+    version: 7.8.3
+
+dependencies:
+  override:
+    - sudo mkdir /app
+    - sudo chown $USER:$USER /app
+    - ./bin/halcyon-build
+
+test:
+  override:
+    - ./bin/setup-db
+    - /app/halcyon/halcyon paths > halcyon-env
+    - source halcyon-env && yesod test
